@@ -1,0 +1,34 @@
+
+from PIL import Image, ImageFont, ImageDraw
+import openpyxl
+
+details_path = 'Participants.xlsx'
+
+
+number_of_rows = 16
+
+obj = openpyxl.load_workbook(details_path)
+sheet = obj.active
+
+x_axis_of_name = 350
+y_axis_of_name = 300
+
+text_color = "black"
+
+for row in range(1, number_of_rows+1):
+    template_path = 'Katilim Belgesi.png'
+
+    image = Image.open(template_path)
+
+    draw = ImageDraw.Draw(image)
+
+    font = ImageFont.truetype(r'arial.ttf', 60)
+    # grabs the row=i and column=1 cell
+    # that contains the name value of that
+    # cell is stored in the variable certi_name
+    get_name = sheet.cell(row=row, column=1)
+    certi_name = get_name.value
+
+    draw.text((x_axis_of_name,y_axis_of_name),certi_name,font=font,fill=text_color,align="right")
+
+    image.save(r"C:\Users\user\Desktop\certificates\Certificate of {}.png".format(certi_name))
