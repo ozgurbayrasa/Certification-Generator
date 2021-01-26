@@ -1,4 +1,3 @@
-
 from PIL import Image, ImageFont, ImageDraw
 import openpyxl
 
@@ -10,8 +9,7 @@ number_of_rows = 16
 obj = openpyxl.load_workbook(details_path)
 sheet = obj.active
 
-x_axis_of_name = 350
-y_axis_of_name = 300
+
 
 text_color = "black"
 
@@ -21,13 +19,23 @@ for row in range(1, number_of_rows+1):
     image = Image.open(template_path)
 
     draw = ImageDraw.Draw(image)
-
-    font = ImageFont.truetype(r'arial.ttf', 60)
+    font_size = 240
+    font = ImageFont.truetype(r'C:\Users\user\Desktop\Belgelerim\Üniversite Toplulukları Belgeleri\IEEE Belgeleri\IEEE EdSoc Belgeleri\Edsoc Katılım Belgesi\GreatVibes-Regular.otf', font_size)
     # grabs the row=i and column=1 cell
     # that contains the name value of that
     # cell is stored in the variable certi_name
     get_name = sheet.cell(row=row, column=1)
     certi_name = get_name.value
+
+    if len(certi_name) >= 17:
+        x_axis_of_name = 1000
+        y_axis_of_name = 1180
+    elif len(certi_name) >= 11:
+        x_axis_of_name = 1060
+        y_axis_of_name = 1180
+    else:
+        x_axis_of_name = 1340
+        y_axis_of_name = 1180
 
     draw.text((x_axis_of_name,y_axis_of_name),certi_name,font=font,fill=text_color,align="right")
 
